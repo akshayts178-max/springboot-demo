@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.common;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
