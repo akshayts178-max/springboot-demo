@@ -22,4 +22,8 @@ public class Address {
     private String countryCode;
     private Double latitude;
     private Double longitude;
+
+    private Integer predictedAge;
+    private String predictedGender;
+    private Double genderProbability;
 }
