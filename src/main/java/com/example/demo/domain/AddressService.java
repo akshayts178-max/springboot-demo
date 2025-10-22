@@ -20,13 +20,13 @@ public class AddressService {
     private final AddressRepository addressRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
-        private static final String FAKER_URL = "https://fakerapi.it/api/v2/addresses?_quantity=1";
-        private static final String AGIFY_URL = "https://api.agify.io?name=meelad";
-        private static final String GENDERIZE_URL = "https://api.genderize.io?name=luc";
+    private static final String FAKER_URL = "https://fakerapi.it/api/v2/addresses?_quantity=1";
+    private static final String AGIFY_URL = "https://api.agify.io?name=meelad";
+    private static final String GENDERIZE_URL = "https://api.genderize.io?name=luc";
 
-        @Async
-        public CompletableFuture<Address> fetchAddressAsync() {
-            log.info("Fetching address from: {}", FAKER_URL);
+    @Async
+    public CompletableFuture<Address> fetchAddressAsync() {
+        log.info("Fetching address from: {}", FAKER_URL);
         Map<String, Object> response = restTemplate.getForObject(FAKER_URL, Map.class);
 
         if (response == null || !response.containsKey("data")) {
@@ -69,7 +69,11 @@ public class AddressService {
     }
 
     public CompletableFuture<Map<String, Object>> fetchAllAsync() {
-        CompletableFuture<Address> addressFuture = fetchAddressAsync();
+        CompletableFuture<Address> addressFuture = fetchAddressAsync()
+                .exceptionally(ex -> {
+                    log.error("Adress fetch failed", ex);
+                    return null;
+                });
         CompletableFuture<Map<String, Object>> agifyFuture = fetchAgifyAsync();
         CompletableFuture<Map<String, Object>> genderizeFuture = fetchGenderizeAsync();
 

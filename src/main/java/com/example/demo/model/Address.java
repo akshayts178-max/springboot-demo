@@ -1,12 +1,14 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
 @Table(name = "addresses")
 public class Address {
     @Id
